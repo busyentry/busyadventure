@@ -1,5 +1,5 @@
 /**
- * This class provides common functions such as file read and write 
+ * This class provides common functions
  * 
  * @author ray@busyentry.com
  * 
