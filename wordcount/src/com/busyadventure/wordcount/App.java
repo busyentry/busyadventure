@@ -47,7 +47,7 @@ public final class App {
 		}
 		
 		// start process
-		try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "spring/*.xml" })) {
+		try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "spring/application.xml" })) {
 			
 			WordCount service = (WordCount) context.getBean("wordCount");
 			
