@@ -1,3 +1,10 @@
+/**
+ * WordCount service
+ * 
+ * @author ray@busyentry.com
+ * 
+ */
+
 package com.busyadventure.wordcount;
 
 import java.io.BufferedWriter;
@@ -39,6 +46,9 @@ public class WordCount extends ServiceBase implements ServiceInterface {
 		this.outputFile = new File(value).getAbsolutePath();
 	}
 
+	/**
+	 * Run the service
+	 */
 	@Override
 	public void run() {
 
@@ -46,10 +56,13 @@ public class WordCount extends ServiceBase implements ServiceInterface {
 		
 		try {
 			
-			Map<String, Integer> result = new TreeMap<>(); // stores final word counts
+			// the variable stores the final word counts
+			Map<String, Integer> result = new TreeMap<>(); 
 			
+			// counting the words
 			countWords(inputFolder, result);
 			
+			// output the result
 			outputResult(result);
 			
 		} catch (Exception ex) {
@@ -138,25 +151,34 @@ public class WordCount extends ServiceBase implements ServiceInterface {
 		while ( m.find() ) {
 			String word = text.substring(m.start(), m.end());
 			
+			// increase the counter if the word exists in the hashMap
 		    if(result.containsKey(word)) {
 		    	Integer count = result.get(word);
 		    	result.put(word, ++count);
-		    } else {
+		    } else { // otherwise add the word to the hashMap
 		    	result.put(word, 1);
 		    }
 		}
 	}
 	
+	/**
+	 * Output the result (future development could include RESTful service datafeed, JSON format as well as charting/reporting
+	 * 
+	 * @param result
+	 * @throws IOException
+	 */
 	private void outputResult( Map<String, Integer> result) throws IOException {
 		
 		getLogger().info("Writting to the output file...");
 		
 		File file = new File(outputFile);
 		
+		// delete the existing result file
 		if(file.exists()) {
 			file.delete();
 		}
 		
+		// write to the final result file
 		try( BufferedWriter writer = new BufferedWriter( new FileWriter( outputFile))) {
 			for(String key : result.keySet()) {
 				writer.write(String.format("%s %s%s", key, result.get(key), System.lineSeparator()));

@@ -27,13 +27,13 @@ public final class App {
 				inputFolder = file.getAbsolutePath();
 			}
 
-			// check if the output file exists or not. If not, we will check if the path is valid or not
+			// check if the output file exists or not. If not, we will at least check if the path is valid or not
 			if(args.length > 1) {
 				file = new File(args[1]);
 				
-				if(file.exists()) {
+				if(file.exists()) { // the file exists
 					outputFile = file.getAbsolutePath();
-				} else {
+				} else { // check the path
 					String path = file.getAbsolutePath();
 					path = path.substring(0, path.lastIndexOf(File.separator));
 					
@@ -51,7 +51,12 @@ public final class App {
 			
 			WordCount service = (WordCount) context.getBean("wordCount");
 			
+			// set inputFolder passed from arguments
+			// If user didn't supply the argument, a default inputFolder is defined in resources/spring/application.xml
 			if(inputFolder != null) service.setInputFolder(inputFolder);
+			
+			// set inputFolder passed from arguments
+			// If user didn't supply the argument, a default outputFile is defined in resources/spring/application.xml
 			if(outputFile != null) service.setOutputFile(outputFile);
 			
 			// kick off the process

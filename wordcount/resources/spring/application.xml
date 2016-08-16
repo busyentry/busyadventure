@@ -34,13 +34,13 @@
     
     <!--== Services ================================================================-->
     <bean id="wordCount" class="com.busyadventure.wordcount.WordCount">
-       <property name="inputFolder" value="data/in" />
-       <property name="outputFile" value="data/out/result.txt" />
+       <property name="inputFolder" value="data/in" />  <!-- specify default input folder here -->
+       <property name="outputFile" value="data/out/result.txt" /> <!--  specify default output file here -->
     </bean>
     
     <!--== Converters ==============================================================-->
     <bean id="converter" class="com.busyadventure.converters.ConverterZip" />
-    <!-- Switch the converter here -->
+    <!-- Switch the converter here (this is for future development!)-->
     <!--<bean id="converter" class="com.busyadventure.converters.ConverterPdf" />-->
     <!--<bean id="converter" class="com.busyadventure.converters.ConverterWord" />-->
     
