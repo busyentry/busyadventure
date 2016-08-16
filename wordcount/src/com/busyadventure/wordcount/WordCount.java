@@ -85,7 +85,7 @@ public class WordCount extends ServiceBase implements ServiceInterface {
 		
 		// 3 cases here:
 		
-		// case 1: for text file - real entire file then count
+		// case 1: for text file - read entire file then count
 		if(fileType.startsWith("text")) {
 			// read entire content from the text file and count
 			List<String> text = null;
