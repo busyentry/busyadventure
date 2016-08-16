@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0">    
+    <info organisation="busyentry" module="java"/>    
+    <dependencies>        
+        <dependency org="log4j" name="log4j" rev="1.2.17"/>
+        <dependency org="junit" name="junit" rev="4.11"/>
+        <dependency org="org.springframework" name="spring-core" rev="4.3.2.RELEASE"/>
+        <dependency org="org.springframework" name="spring-context" rev="4.3.2.RELEASE"/>
+    </dependencies>
+</ivy-module>

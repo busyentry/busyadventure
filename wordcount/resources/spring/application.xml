@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Spring config 
+  
+  @author ray@busyentry.com
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/security 
+        http://www.springframework.org/schema/security/spring-security-3.1.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util-3.0.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/task 
+        http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <context:annotation-config />
+    
+    <bean name="applicationName" class="java.lang.String">
+        <constructor-arg value="WordCount" />
+    </bean>
+    
+    <!--== Utilities ===============================================================-->
+    
+    <!--== Services ================================================================-->
+    <bean id="wordCount" class="com.busyadventure.wordcount.WordCount">
+       <property name="inputFolder" value="data/in" />
+       <property name="outputFile" value="data/out/result.txt" />
+    </bean>
+    
+    <!--== Converters ==============================================================-->
+    <bean id="converter" class="com.busyadventure.converters.ConverterZip" />
+    <!-- Switch the converter here -->
+    <!--<bean id="converter" class="com.busyadventure.converters.ConverterPdf" />-->
+    <!--<bean id="converter" class="com.busyadventure.converters.ConverterWord" />-->
+    
+    <!--== Exception handler ================================================================-->
+    <bean name="exceptionHandler" class="com.busylib.common.ExceptionHandler" />
+    
+    <!--== Email manager     ================================================================-->
+    
+    <!--== Auto scanned beans================================================================-->
+    <context:component-scan base-package="com.busyadventure.converters" />
+    <context:component-scan base-package="com.busylib" />
+</beans>
