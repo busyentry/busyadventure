@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -56,8 +57,8 @@ public class WordCount extends ServiceBase implements ServiceInterface {
 		
 		try {
 			
-			// the variable stores the final word counts
-			Map<String, Integer> result = new TreeMap<>(); 
+			// the variable stores the final result: <wordCount, fileCount>
+			Map<Integer, Integer> result = new TreeMap<>(); 
 			
 			// counting the words
 			countWords(inputFolder, result);
@@ -79,7 +80,10 @@ public class WordCount extends ServiceBase implements ServiceInterface {
 	 * @param result
 	 * @throws Exception 
 	 */
-	private void countWords(String file, Map<String, Integer> result) throws Exception {
+	private void countWords(String file, Map<Integer, Integer> result) throws Exception {
+		
+		// stores word counts for each text file
+		Map<String, Integer> words = new HashMap<>();
 		
 		String fileType = Utility.getFileType(file);
 		
@@ -96,7 +100,19 @@ public class WordCount extends ServiceBase implements ServiceInterface {
 			
 			if(text != null) {
 				for(String line : text) {
-					countStringWords(line, result);
+					countStringWords(line, words);
+				}
+				
+				// the size of the HashMap is the # of the unique words in a file
+				Integer wordCount = words.size();
+				
+				if(result.containsKey(wordCount)) {
+					// increase the fileCount for existing wordCount
+					int currentCount = result.get(wordCount);
+					result.put(wordCount, ++currentCount);
+				} else { 
+					// add the wordCount to the final result
+					result.put(wordCount, 1);
 				}
 			}
 		}
@@ -131,7 +147,19 @@ public class WordCount extends ServiceBase implements ServiceInterface {
 							
 				getLogger().info(String.format("processing %d of %d: %s - %s", ++count, size, file, fileInZip));
 				
-				countStringWords(text, result);
+				countStringWords(text, words);
+				
+				// the size of the HashMap is the # of the unique words in a file
+				Integer wordCount = words.size();
+				
+				if(result.containsKey(wordCount)) {
+					// increase the fileCount for existing wordCount
+					int currentCount = result.get(wordCount);
+					result.put(wordCount, ++currentCount);
+				} else { 
+					// add the wordCount to the final result
+					result.put(wordCount, 1);
+				}
 			}
 		}
 	}
@@ -167,7 +195,7 @@ public class WordCount extends ServiceBase implements ServiceInterface {
 	 * @param result
 	 * @throws IOException
 	 */
-	private void outputResult( Map<String, Integer> result) throws IOException {
+	private void outputResult( Map<Integer, Integer> result) throws IOException {
 		
 		getLogger().info("Writting to the output file...");
 		
@@ -180,8 +208,8 @@ public class WordCount extends ServiceBase implements ServiceInterface {
 		
 		// write to the final result file
 		try( BufferedWriter writer = new BufferedWriter( new FileWriter( outputFile))) {
-			for(String key : result.keySet()) {
-				writer.write(String.format("%s %s%s", key, result.get(key), System.lineSeparator()));
+			for(Integer key : result.keySet()) {
+				writer.write(String.format("%d have %d words%s", result.get(key), key, System.lineSeparator()));
 			}
 		}
 		catch ( IOException e)	{
