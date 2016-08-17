@@ -24,7 +24,7 @@ public final class App {
 			
 			// check if the input folder exists
 			if(file.exists() && file.isDirectory()) {
-				inputFolder = file.getAbsolutePath();
+				inputFolder = file.getAbsolutePath(); 
 			}
 
 			// check if the output file exists or not. If not, we will at least check if the path is valid or not
