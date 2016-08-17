@@ -12,6 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public final class App {  
 
+	//private static Logger log = Logger.getLogger(App.class);
 	public static final String NAME ="busyadventure.wordcount";
 		
 	public static void main(String[] args) { 
@@ -24,7 +25,10 @@ public final class App {
 			
 			// check if the input folder exists
 			if(file.exists() && file.isDirectory()) {
-				inputFolder = file.getAbsolutePath(); 
+				inputFolder = file.getAbsolutePath();
+			} else {
+				System.out.println("Invalid input directory!");
+				System.exit(1);
 			}
 
 			// check if the output file exists or not. If not, we will at least check if the path is valid or not
@@ -41,6 +45,9 @@ public final class App {
 					
 					if(filePath.exists() && filePath.isDirectory()) {
 						outputFile = file.getAbsolutePath();
+					} else {
+						System.out.println("Invalid output file directory!");
+						System.exit(1);
 					}
 				}
 			}
